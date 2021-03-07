@@ -1,0 +1,4 @@
+things to complete in our snake game:
+1) finish up the snake body
+2) create a border
+3) setting up the food apearece
