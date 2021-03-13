@@ -87,5 +87,10 @@ namespace SnakeGamePlatform
                 this.picBox.Top + this.picBox.Height > board.GetBoard().ClientRectangle.Height ||
                 !this.picBox.Bounds.IntersectsWith(board.GetBoard().ClientRectangle));
         }
+        // פעולת עזר לקבלת כיוון
+        public Direction getDirection()
+        {
+            return this.direction;
+        }
     }
 }

@@ -29,5 +29,10 @@ namespace SnakeGamePlatform
             char c = (char) e.KeyValue;
             board.Events.KeyDown(board, c);
         }
+
+        private void GameBoard_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

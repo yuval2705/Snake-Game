@@ -146,6 +146,21 @@ namespace SnakeGamePlatform
             gameSound.URL = path + audioFile;
         }
 
+        public void StopBackgroundMusic()
+        {
+            gameSound.controls.stop();
+        }
+
+        public void PauseBackgroundMusic()
+        {
+            gameSound.controls.pause();
+        }
+
+        public void ResumeBackgroundMusic()
+        {
+            gameSound.controls.play();
+        }
+
         public void PlayShortMusic(string audioFile)
         {
             System.Media.SoundPlayer player = new System.Media.SoundPlayer();

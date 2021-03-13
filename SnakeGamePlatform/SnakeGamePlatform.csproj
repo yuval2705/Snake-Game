@@ -138,7 +138,13 @@
   <ItemGroup>
     <Content Include="Images\Black.png" />
     <Content Include="Images\Dynoro &amp; Gigi DAgostino - In My Mind.mp3" />
+    <Content Include="Images\food.wav" />
+    <Content Include="Images\loser.wav" />
     <Content Include="Images\tenor.gif" />
+    <Content Include="Images\yodasigmaDOWN.png" />
+    <Content Include="Images\yodasigmaLEFT.png" />
+    <Content Include="Images\yodasigmaRIGHT.png" />
+    <Content Include="Images\yona.jpg" />
     <Content Include="Resources\merets.jpg" />
     <Content Include="Images\yodasigma.png" />
     <None Include="Resources\yodasigma.bmp" />

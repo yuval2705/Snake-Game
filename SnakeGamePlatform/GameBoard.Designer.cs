@@ -39,6 +39,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "GameBoard";
             this.Text = "Game Board";
+            this.Load += new System.EventHandler(this.GameBoard_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GameBoard_KeyDown);
             this.ResumeLayout(false);
 
