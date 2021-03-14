@@ -245,7 +245,7 @@ namespace SnakeGamePlatform
                 
 
                 //resets all the game parameters
-                ParametersReset(board);
+                //ParametersReset(board);
                 //starts the timer
                 //board.StartTimer(timerDifficulty);
             }
@@ -336,7 +336,7 @@ namespace SnakeGamePlatform
         //check if a specific object is interacting with the snake body (only his body)
         public bool OBJInteractsWithSnake(Board board,GameObject obj)
         {
-            for (int i = 1; i < bodyLength; i++)
+            for (int i = 2; i < bodyLength; i++)
             {
                 if (obj.IntersectWith(snakeBody[i]))
                     return true;
