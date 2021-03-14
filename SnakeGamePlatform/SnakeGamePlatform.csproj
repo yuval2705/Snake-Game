@@ -137,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\Black.png" />
+    <Content Include="Images\cos.png" />
     <Content Include="Images\Dynoro &amp; Gigi DAgostino - In My Mind.mp3" />
     <Content Include="Images\food.wav" />
     <Content Include="Images\loser.wav" />

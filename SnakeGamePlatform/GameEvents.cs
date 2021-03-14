@@ -9,7 +9,13 @@ using WMPLib;
 
 namespace SnakeGamePlatform
 {
-    
+    //To Do
+    // rearange the board and his dynamic - 
+    // add the press "space" to start - 
+    // add the press "space" to restart -
+    // fix sound - yuval
+    // finish the food spawning algorithem - yuval
+
     public class GameEvents:IGameEvents
     {
         //declering all the verrabls
@@ -102,7 +108,8 @@ namespace SnakeGamePlatform
             Board.resolutionFactor = 2;
             board.XSize = 420;
             board.YSize = 400;
-            board.SetBackgroundImage(Properties.Resources.merets);
+            //board.SetBackgroundImage(Properties.Resources.merets);
+            board.SetBackgroundColor(Color.Red);
             //-----Finished Board----
 
 
@@ -219,7 +226,7 @@ namespace SnakeGamePlatform
             {
                 board.StopBackgroundMusic();
 
-                board.PlayShortMusic(@"\Images\loser.wav");
+                //board.PlayShortMusic(@"\Images\loser.wav");
 
 
                 Position labelPosition = new Position(120, 100);
@@ -234,8 +241,33 @@ namespace SnakeGamePlatform
                 board.AddLabel(lblScore);
                 board.StopTimer();
 
+                //letting the user to restart the game by pressing "ENTER"
+                
+
+                //resets all the game parameters
+                ParametersReset(board);
+                //starts the timer
+                //board.StartTimer(timerDifficulty);
             }
             // add a reset funcation for all te values
+        }
+        public void ParametersReset(Board board)
+        {
+            timerDifficulty = 120;
+            bodyLength = 0;
+            FoodCount = 0;
+            SuperFoodCount = 0;
+            BadFoodCount = 0;
+
+            snakeBody = new GameObject[bodyLength];
+
+            //snake head
+            Position snakeHeadPosition = new Position(100, 100);
+            snakeBody[0] = new GameObject(snakeHeadPosition, 10, 10);
+            snakeBody[0].SetImage(Properties.Resources.yodasigma);
+            snakeBody[0].direction = GameObject.Direction.RIGHT;
+            board.AddGameObject(snakeBody[0]);
+            // ---------------
         }
 
         /// <summary>
@@ -344,7 +376,7 @@ namespace SnakeGamePlatform
             }
             Position newBodyPosition = copy[bodyLength - 2].GetPosition();
             copy[bodyLength - 1] = new GameObject(newBodyPosition, 10, 10);
-            copy[bodyLength - 1].SetImage(Properties.Resources.food);
+            copy[bodyLength - 1].SetImage(Properties.Resources.cos);
 
             if (snakeBody[bodyLength - 2].direction == GameObject.Direction.RIGHT)
             {
@@ -367,7 +399,7 @@ namespace SnakeGamePlatform
                 copy[bodyLength - 1].SetPosition(newBodyPosition);
             }
             board.AddGameObject(copy[bodyLength - 1]);
-            copy[bodyLength - 1].SetImage(Properties.Resources.food);
+            copy[bodyLength - 1].SetImage(Properties.Resources.cos);
             snakeBody = copy;
             snakeBody[bodyLength - 1].direction = snakeBody[bodyLength - 2].direction;
             board.AddGameObject(snakeBody[bodyLength-1]);
@@ -418,14 +450,14 @@ namespace SnakeGamePlatform
             if (snakeBody[0].IntersectWith(Food))
             {
                 //board.PauseBackgroundMusic();
-                board.PlayShortMusic(@"\Images\food.wav");
+                //board.PlayShortMusic(@"\Images\food.wav");
                 SnakeGrowByOne(board);
                 FoodCount--;
                 //board.PlayBackgroundMusic(@"\Images\Dynoro & Gigi DAgostino - In My Mind.mp3");
             }
             if (snakeBody[0].IntersectWith(SuperFood))
             {
-                board.PlayShortMusic(@"\Images\superfood.wav");
+                //board.PlayShortMusic(@"\Images\superfood.wav");
                 //board.PlayShortMusic(@"\Images\איציקyonimisthebest.wav");
                 SnakeGrowByNumber(board, 3);
                 AddSuperFood(board);
