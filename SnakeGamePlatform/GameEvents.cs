@@ -10,11 +10,11 @@ using WMPLib;
 namespace SnakeGamePlatform
 {
     //To Do
-    // rearange the board and his dynamic - 
-    // finish the food spawning algorithem - 
-    // finish the start message -
-    // finish the game over message - 
-    // finish the timer -
+    // rearange the board and his dynamic - togther :>
+    // finish the food spawning algorithem - yuval
+    // finish the start message - yuval
+    // finish the game over message - yuval
+    // finish the timer -  yuval
 
     public class GameEvents:IGameEvents
     {
@@ -149,7 +149,7 @@ namespace SnakeGamePlatform
 
 
             //background music
-            board.PlayBackgroundMusic(@"\Images\Dynoro & Gigi DAgostino - In My Mind.mp3");
+            //board.PlayBackgroundMusic(@"\Images\Dynoro & Gigi DAgostino - In My Mind.mp3");
 
 
 
@@ -179,8 +179,6 @@ namespace SnakeGamePlatform
         {
             SnakeMovement();
 
-            GameOver(board);
-
             lblScore.SetText($"SCORE:{bodyLength-1}");
             PlaceTimer(board);
 
@@ -205,7 +203,7 @@ namespace SnakeGamePlatform
                 snakeHeadPosition.X = snakeHeadPosition.X + BodySize;
                 snakeBody[0].SetPosition(snakeHeadPosition);
             }
-            
+            GameOver(board);
             SnakeEatenFood(board);
             AddFood(board);
 
