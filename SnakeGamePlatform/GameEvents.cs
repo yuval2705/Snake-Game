@@ -28,6 +28,7 @@ namespace SnakeGamePlatform
         GameObject BottomBorder;
         GameObject RightBorder;
         GameObject LeftBorder;
+        GameObject StartMenu;
         public static int BodySize = 20;
 
         public static int bodyLength = 1;
@@ -48,22 +49,22 @@ namespace SnakeGamePlatform
         {
             Position TopBorderPosition = new Position(0, 0);
             TopBorder = new GameObject(TopBorderPosition, 400, 20);
-            TopBorder.SetBackgroundColor(Color.Black);
+            TopBorder.SetBackgroundColor(Color.White);
             board.AddGameObject(TopBorder);
 
             Position BottomBorderPosition = new Position(380, 0);
             BottomBorder = new GameObject(BottomBorderPosition, 400, 20);
-            BottomBorder.SetBackgroundColor(Color.Black);
+            BottomBorder.SetBackgroundColor(Color.White);
             board.AddGameObject(BottomBorder);
 
-            Position RightBorderPosition = new Position(0, 380);
+            Position RightBorderPosition = new Position(0, 400);
             RightBorder = new GameObject(RightBorderPosition, 20, 400);
-            RightBorder.SetBackgroundColor(Color.Black);
+            RightBorder.SetBackgroundColor(Color.White);
             board.AddGameObject(RightBorder);
 
             Position LeftBorderPosition = new Position(0, 0);
             LeftBorder = new GameObject(LeftBorderPosition, 20, 400);
-            LeftBorder.SetBackgroundColor(Color.Black);
+            LeftBorder.SetBackgroundColor(Color.White);
             board.AddGameObject(LeftBorder);
         }
 
@@ -113,10 +114,24 @@ namespace SnakeGamePlatform
             //Setup board size and resolution!
             Board.resolutionFactor = 2;
             board.XSize = 420;
-            board.YSize = 400;
+            board.YSize = 420;
             //board.SetBackgroundImage(Properties.Resources.merets);
-            board.SetBackgroundColor(Color.Red);
+            board.SetBackgroundColor(Color.Green);
             //-----Finished Board----
+
+            if (!gamewasover)
+            {
+                StartMenu = new GameObject(new Position(0, 0), 420, 400);
+                StartMenu.SetImage(Properties.Resources.rozen_menu);
+                board.AddGameObject(StartMenu);
+            }
+            else
+            {
+                Position pressPosition = new Position(70, 100);
+                lblPressSpace = new TextLabel("Press space to start again!", pressPosition);
+                lblPressSpace.SetFont(FontStyle.Italic.ToString(), 40);
+                board.AddLabel(lblPressSpace);
+            }
 
 
             //Score
@@ -151,26 +166,7 @@ namespace SnakeGamePlatform
             //background music
             //board.PlayBackgroundMusic(@"\Images\Dynoro & Gigi DAgostino - In My Mind.mp3");
 
-
-
-            if (!gamewasover)
-            {
-                Position pressPosition = new Position(70,100);
-                lblPressSpace = new TextLabel("Press space to start!",pressPosition);
-                lblPressSpace.SetFont(FontStyle.Italic.ToString(),40);
-                board.AddLabel(lblPressSpace);
-                //add a dictionary for the game food types
-                //..........
-            }
-            else
-            {
-                //הודעת סיום
-            }
-
-
             //Start game timer!
-           
-
         }
  
         //This function is called frequently based on the game board interval that was set when starting the timer!
@@ -238,10 +234,11 @@ namespace SnakeGamePlatform
                 {
                     ParametersReset(board);
                     GameInit(board);
+                    board.RemoveGameText(lblPressSpace);
                     gamewasover = false;
                 }
-                board.RemoveGameText(lblPressSpace);
                 board.StartTimer(timerDifficulty);
+                board.RemoveGameObject(StartMenu);
             }
         }
 
@@ -266,12 +263,21 @@ namespace SnakeGamePlatform
                 GAMEOVER = new TextLabel("GAME OVER",gameOverPosition);
                 GAMEOVER.SetFont("comics sans", 60);
 
+                
                 board.AddLabel(GAMEOVER);
                 board.AddLabel(lblScore);
                 board.StopTimer();
 
+                //getting rid of the game objects that are still in the screen
+                for (int i = 0; i < bodyLength; i++)
+                {
+                    board.RemoveGameObject(snakeBody[i]);
+                }
+                board.RemoveGameObject(Food);
+                board.RemoveGameObject(SuperFood);
+                board.RemoveGameObject(BadFood);
                 //letting the user to restart the game by pressing "SPACE"
-                
+
                 gamewasover = true;
                 
             }
@@ -320,11 +326,11 @@ namespace SnakeGamePlatform
                 Random foodX = new Random();
                 Random foodY = new Random();
 
-                Food.SetPosition(new Position(foodX.Next(20, 421), foodY.Next(20, 381)));
+                Food.SetPosition(new Position(foodX.Next(0, 421), Math.Abs(foodY.Next(0, 800) - 421 - foodX.Next(0,200))));
                 bool IsInteractsWithSomething = Food.OnScreen(board) && !Food.IntersectWith(snakeBody[0]) && !Food.IntersectWith(SuperFood) && !Food.IntersectWith(BadFood) && !OBJInteractsWithSnake(board, Food) && !Food.IntersectWith(LeftBorder) && !Food.IntersectWith(RightBorder) && !Food.IntersectWith(BottomBorder) && !Food.IntersectWith(TopBorder);
                 while(!IsInteractsWithSomething)
                 {
-                    Food.SetPosition(new Position(foodX.Next(20, 421), foodY.Next(20, 381)));
+                    Food.SetPosition(new Position(foodX.Next(0, 421), Math.Abs(foodY.Next(0, 800) - 421 - foodX.Next(0, 200))));
                     IsInteractsWithSomething = Food.OnScreen(board) && !Food.IntersectWith(snakeBody[0]) && !Food.IntersectWith(SuperFood) && !Food.IntersectWith(BadFood) && !OBJInteractsWithSnake(board, Food) && !Food.IntersectWith(LeftBorder) && !Food.IntersectWith(RightBorder) && !Food.IntersectWith(BottomBorder) && !Food.IntersectWith(TopBorder);
                 }
                 FoodCount++;

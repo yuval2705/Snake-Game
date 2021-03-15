@@ -144,6 +144,7 @@
     <Content Include="Images\endGame.wav" />
     <Content Include="Images\gameover.wav" />
     <Content Include="Images\kuku.wav" />
+    <Content Include="Images\rozen_menu.png" />
     <Content Include="Images\yodasigmaDOWN.png" />
     <Content Include="Images\yodasigmaLEFT.png" />
     <Content Include="Images\yodasigmaRIGHT.png" />
