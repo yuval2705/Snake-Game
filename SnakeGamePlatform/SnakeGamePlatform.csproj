@@ -139,9 +139,11 @@
     <Content Include="Images\Black.png" />
     <Content Include="Images\cos.png" />
     <Content Include="Images\Dynoro &amp; Gigi DAgostino - In My Mind.mp3" />
-    <Content Include="Images\food.wav" />
-    <Content Include="Images\loser.wav" />
-    <Content Include="Images\tenor.gif" />
+    <Content Include="Images\eatFood.wav" />
+    <Content Include="Images\eatSuperFood.wav" />
+    <Content Include="Images\endGame.wav" />
+    <Content Include="Images\gameover.wav" />
+    <Content Include="Images\kuku.wav" />
     <Content Include="Images\yodasigmaDOWN.png" />
     <Content Include="Images\yodasigmaLEFT.png" />
     <Content Include="Images\yodasigmaRIGHT.png" />

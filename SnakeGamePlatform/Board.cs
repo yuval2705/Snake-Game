@@ -123,6 +123,10 @@ namespace SnakeGamePlatform
         {
             board.Controls.Remove(obj.PicControl);
         }
+        public void RemoveGameText(TextLabel text)
+        {
+            board.Controls.Remove(text.LabelControl);
+        }
 
         private void GameTick(Object sender, EventArgs e)
         {

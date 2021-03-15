@@ -11,10 +11,10 @@ namespace SnakeGamePlatform
 {
     //To Do
     // rearange the board and his dynamic - 
-    // add the press "space" to start - 
-    // add the press "space" to restart -
-    // fix sound - yuval
-    // finish the food spawning algorithem - yuval
+    // finish the food spawning algorithem - 
+    // finish the start message -
+    // finish the game over message - 
+    // finish the timer -
 
     public class GameEvents:IGameEvents
     {
@@ -23,10 +23,13 @@ namespace SnakeGamePlatform
         GameObject[] snakeBody;
         TextLabel lblScore;
         TextLabel lbltimer;
+        TextLabel lblPressSpace;
         GameObject TopBorder;
         GameObject BottomBorder;
         GameObject RightBorder;
         GameObject LeftBorder;
+        public static int BodySize = 20;
+
         public static int bodyLength = 1;
         GameObject Food;
         public static int FoodCount = 0;
@@ -36,28 +39,31 @@ namespace SnakeGamePlatform
 
         GameObject BadFood;
         public static int BadFoodCount = 0;
+
+        public static bool gamewasover = false;
+        TextLabel GAMEOVER;
         
         //placing the game borders, must have them or the game will be unloseble
         public void PlaceBorders(Board board)
         {
             Position TopBorderPosition = new Position(0, 0);
             TopBorder = new GameObject(TopBorderPosition, 400, 20);
-            TopBorder.SetImage(Properties.Resources.Black);
+            TopBorder.SetBackgroundColor(Color.Black);
             board.AddGameObject(TopBorder);
 
             Position BottomBorderPosition = new Position(380, 0);
             BottomBorder = new GameObject(BottomBorderPosition, 400, 20);
-            BottomBorder.SetImage(Properties.Resources.Black);
+            BottomBorder.SetBackgroundColor(Color.Black);
             board.AddGameObject(BottomBorder);
 
             Position RightBorderPosition = new Position(0, 380);
             RightBorder = new GameObject(RightBorderPosition, 20, 400);
-            RightBorder.SetImage(Properties.Resources.Black);
+            RightBorder.SetBackgroundColor(Color.Black);
             board.AddGameObject(RightBorder);
 
             Position LeftBorderPosition = new Position(0, 0);
             LeftBorder = new GameObject(LeftBorderPosition, 20, 400);
-            LeftBorder.SetImage(Properties.Resources.Black);
+            LeftBorder.SetBackgroundColor(Color.Black);
             board.AddGameObject(LeftBorder);
         }
 
@@ -88,17 +94,17 @@ namespace SnakeGamePlatform
 
             //food
             Position FoodPosition = new Position(0,0);
-            Food = new GameObject(FoodPosition, 10, 10);
+            Food = new GameObject(FoodPosition, BodySize, BodySize);
             Food.SetImage(Properties.Resources.yona);
 
             //super food
             Position SuperFoodPosition = new Position(0,0);
-            SuperFood = new GameObject(SuperFoodPosition, 10, 10);
+            SuperFood = new GameObject(SuperFoodPosition, BodySize, BodySize);
             SuperFood.SetImage(Properties.Resources.food);
 
             //bad food
             Position BadFoodPosition = new Position(0,0);
-            BadFood = new GameObject(BadFoodPosition, 10, 10);
+            BadFood = new GameObject(BadFoodPosition, BodySize, BodySize);
             BadFood.SetImage(Properties.Resources.food);
         }
         public void GameInit(Board board)
@@ -130,8 +136,8 @@ namespace SnakeGamePlatform
 
             //snake head
             Position snakeHeadPosition = new Position(100, 100);
-            snakeBody[0] = new GameObject(snakeHeadPosition, 10, 10);
-            snakeBody[0].SetImage(Properties.Resources.yodasigma);
+            snakeBody[0] = new GameObject(snakeHeadPosition, BodySize, BodySize);
+            snakeBody[0].SetImage(Properties.Resources.yodasigmaRIGHT);
             snakeBody[0].direction = GameObject.Direction.RIGHT;
             board.AddGameObject(snakeBody[0]);
             // ---------------
@@ -143,48 +149,60 @@ namespace SnakeGamePlatform
 
 
             //background music
-            //board.PlayBackgroundMusic(@"\Images\Dynoro & Gigi DAgostino - In My Mind.mp3");
-            //
+            board.PlayBackgroundMusic(@"\Images\Dynoro & Gigi DAgostino - In My Mind.mp3");
 
-            //Play file once!
-            //board.PlayShortMusic(@"\Images\eat.wav");
+
+
+            if (!gamewasover)
+            {
+                Position pressPosition = new Position(70,100);
+                lblPressSpace = new TextLabel("Press space to start!",pressPosition);
+                lblPressSpace.SetFont(FontStyle.Italic.ToString(),40);
+                board.AddLabel(lblPressSpace);
+                //add a dictionary for the game food types
+                //..........
+            }
+            else
+            {
+                //הודעת סיום
+            }
 
 
             //Start game timer!
-            board.StartTimer(timerDifficulty);
+           
 
         }
-        
-        
+ 
         //This function is called frequently based on the game board interval that was set when starting the timer!
         //Use this function to move game objects and check collisions
         public void GameClock(Board board)
         {
-            
+            SnakeMovement();
+
             GameOver(board);
+
             lblScore.SetText($"SCORE:{bodyLength-1}");
             PlaceTimer(board);
 
-            SnakeMovement();
             Position snakeHeadPosition = snakeBody[0].GetPosition();
             if (snakeBody[0].direction == GameObject.Direction.RIGHT)
             {
-                snakeHeadPosition.Y = snakeHeadPosition.Y + 10;
+                snakeHeadPosition.Y = snakeHeadPosition.Y + BodySize;
                 snakeBody[0].SetPosition(snakeHeadPosition);
             }
             else if (snakeBody[0].direction == GameObject.Direction.LEFT)
             {
-                snakeHeadPosition.Y = snakeHeadPosition.Y - 10;
+                snakeHeadPosition.Y = snakeHeadPosition.Y - BodySize;
                 snakeBody[0].SetPosition(snakeHeadPosition);
             }
             else if (snakeBody[0].direction == GameObject.Direction.UP)
             {
-                snakeHeadPosition.X = snakeHeadPosition.X - 10;
+                snakeHeadPosition.X = snakeHeadPosition.X - BodySize;
                 snakeBody[0].SetPosition(snakeHeadPosition);
             }
             else if (snakeBody[0].direction == GameObject.Direction.DOWN)
             {
-                snakeHeadPosition.X = snakeHeadPosition.X + 10;
+                snakeHeadPosition.X = snakeHeadPosition.X + BodySize;
                 snakeBody[0].SetPosition(snakeHeadPosition);
             }
             
@@ -216,6 +234,17 @@ namespace SnakeGamePlatform
                 snakeBody[0].SetImage(Properties.Resources.yodasigma);
                 snakeBody[0].SetImage(Properties.Resources.yodasigmaDOWN);
             }
+            if (key == (char)ConsoleKey.Spacebar)
+            {
+                if (gamewasover)
+                {
+                    ParametersReset(board);
+                    GameInit(board);
+                    gamewasover = false;
+                }
+                board.RemoveGameText(lblPressSpace);
+                board.StartTimer(timerDifficulty);
+            }
         }
 
         //checks if the player has lost and "uploads" the "GAME OVER" screen
@@ -225,49 +254,61 @@ namespace SnakeGamePlatform
             if (isOver)
             {
                 board.StopBackgroundMusic();
+                board.PlayShortMusic(@"\Images\endgame.wav");
 
-                //board.PlayShortMusic(@"\Images\loser.wav");
-
-
+                board.RemoveGameText(lblScore);
                 Position labelPosition = new Position(120, 100);
                 lblScore = new TextLabel($"SCORE:{(bodyLength-1).ToString()}", labelPosition);
                 lblScore.SetFont("comics sans", 50);
 
+                board.RemoveGameText(lbltimer);
+
+
                 Position gameOverPosition = new Position(70,100);
-                TextLabel GAMEOVER = new TextLabel("GAME OVER",gameOverPosition);
+                GAMEOVER = new TextLabel("GAME OVER",gameOverPosition);
                 GAMEOVER.SetFont("comics sans", 60);
 
                 board.AddLabel(GAMEOVER);
                 board.AddLabel(lblScore);
                 board.StopTimer();
 
-                //letting the user to restart the game by pressing "ENTER"
+                //letting the user to restart the game by pressing "SPACE"
                 
-
-                //resets all the game parameters
-                //ParametersReset(board);
-                //starts the timer
-                //board.StartTimer(timerDifficulty);
+                gamewasover = true;
+                
             }
-            // add a reset funcation for all te values
         }
+
+        // add a reset funcation for all te values
         public void ParametersReset(Board board)
         {
+            //removing all the game objects
+            for (int i = 0; i < bodyLength; i++)
+            {
+                board.RemoveGameObject(snakeBody[i]);
+            }
+            board.RemoveGameObject(Food);
+            board.RemoveGameObject(SuperFood);
+            board.RemoveGameObject(BadFood);
+            board.RemoveGameObject(LeftBorder);
+            board.RemoveGameObject(RightBorder);
+            board.RemoveGameObject(TopBorder);
+            board.RemoveGameObject(BottomBorder);
+
+
+            // reseting all the game labels
+            board.RemoveGameText(GAMEOVER);
+            board.RemoveGameText(lblScore);
+            board.RemoveGameText(lbltimer);
+
+
+            // reseting all the helping parameters
             timerDifficulty = 120;
-            bodyLength = 0;
+            bodyLength = 1;
             FoodCount = 0;
             SuperFoodCount = 0;
             BadFoodCount = 0;
 
-            snakeBody = new GameObject[bodyLength];
-
-            //snake head
-            Position snakeHeadPosition = new Position(100, 100);
-            snakeBody[0] = new GameObject(snakeHeadPosition, 10, 10);
-            snakeBody[0].SetImage(Properties.Resources.yodasigma);
-            snakeBody[0].direction = GameObject.Direction.RIGHT;
-            board.AddGameObject(snakeBody[0]);
-            // ---------------
         }
 
         /// <summary>
@@ -375,7 +416,7 @@ namespace SnakeGamePlatform
                 copy[i] = snakeBody[i];
             }
             Position newBodyPosition = copy[bodyLength - 2].GetPosition();
-            copy[bodyLength - 1] = new GameObject(newBodyPosition, 10, 10);
+            copy[bodyLength - 1] = new GameObject(newBodyPosition, BodySize, BodySize);
             copy[bodyLength - 1].SetImage(Properties.Resources.cos);
 
             if (snakeBody[bodyLength - 2].direction == GameObject.Direction.RIGHT)
@@ -425,7 +466,7 @@ namespace SnakeGamePlatform
 
             //snake head
             Position snakeHeadPosition = new Position(100, 100);
-            snakeBody[0] = new GameObject(snakeHeadPosition, 10, 10);
+            snakeBody[0] = new GameObject(snakeHeadPosition, BodySize, BodySize);
             snakeBody[0].SetImage(Properties.Resources.yodasigma);
             snakeBody[0].direction = GameObject.Direction.RIGHT;
 
@@ -449,26 +490,29 @@ namespace SnakeGamePlatform
         {
             if (snakeBody[0].IntersectWith(Food))
             {
-                //board.PauseBackgroundMusic();
-                //board.PlayShortMusic(@"\Images\food.wav");
+                board.PauseBackgroundMusic();
+                board.PlayShortMusic(@"\Images\eatFood.wav");
                 SnakeGrowByOne(board);
                 FoodCount--;
-                //board.PlayBackgroundMusic(@"\Images\Dynoro & Gigi DAgostino - In My Mind.mp3");
+                board.ResumeBackgroundMusic();
             }
             if (snakeBody[0].IntersectWith(SuperFood))
             {
-                //board.PlayShortMusic(@"\Images\superfood.wav");
-                //board.PlayShortMusic(@"\Images\איציקyonimisthebest.wav");
+                board.PauseBackgroundMusic();
+                board.PlayShortMusic(@"\Images\eatSuperFood.wav");
                 SnakeGrowByNumber(board, 3);
                 AddSuperFood(board);
+                board.ResumeBackgroundMusic();
                 
             }
             if (snakeBody[0].IntersectWith(BadFood))
             {
-                //board.PlayShortMusic(@"\Images\loser.wav");
-                //snake loses one score
+                board.PauseBackgroundMusic();
+                board.PlayShortMusic(@"\Images\gameover.wav");
                 AddBadFood(board);
+                board.ResumeBackgroundMusic();
             }
         }
+
     }
 }
