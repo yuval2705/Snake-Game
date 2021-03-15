@@ -12,7 +12,6 @@ namespace SnakeGamePlatform
     //To Do
     // rearange the board and his dynamic - togther :>
     // finish the food spawning algorithem - yuval
-    // finish the start message - yuval
     // finish the game over message - yuval
     // finish the timer -  yuval
 
