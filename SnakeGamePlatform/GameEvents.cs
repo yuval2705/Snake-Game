@@ -11,7 +11,7 @@ namespace SnakeGamePlatform
 {
     //To Do
     // finish the bad food spawning algorithem - yuval
-    // finish the game over message - yuval
+
 
     public class GameEvents:IGameEvents
     {
@@ -302,6 +302,9 @@ namespace SnakeGamePlatform
                 FunnyEnding.SetFont("comics sans", 40);
                 board.AddLabel(FunnyEnding);
 
+                lblPressSpace = new TextLabel("press space to restart",new Position(300,100));
+                lblPressSpace.SetFont("comics sans", 40);
+                board.AddLabel(lblPressSpace);
                 board.StopTimer();
 
                 //getting rid of the game objects that are still in the screen
@@ -341,6 +344,7 @@ namespace SnakeGamePlatform
             board.RemoveGameText(lblScore);
             board.RemoveGameText(lbltimer);
             board.RemoveGameText(FunnyEnding);
+            board.RemoveGameText(lblPressSpace);
 
 
             // reseting all the helping parameters
