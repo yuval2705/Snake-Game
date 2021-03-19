@@ -18,7 +18,7 @@ namespace SnakeGamePlatform
     public class GameEvents:IGameEvents
     {
         //declering all the verrabls
-        public static int timerDifficulty = 120;
+        public static int timerDifficulty = 140;
         GameObject[] snakeBody;
         TextLabel lblScore;
         TextLabel lbltimer;
@@ -28,21 +28,25 @@ namespace SnakeGamePlatform
         GameObject RightBorder;
         GameObject LeftBorder;
         GameObject StartMenu;
+        public int timer = 0;
+        public int MemberOfKnesset = 1;
+
         public static int BodySize = 20;
 
         public static int bodyLength = 1;
         GameObject Food;
-        public static int FoodCount = 0;
+        public static bool Foodstatus = false;
 
         GameObject SuperFood;
-        public static int SuperFoodCount = 0;
+        public static bool SuperFoodstatus = false;
 
         GameObject BadFood;
-        public static int BadFoodCount = 0;
+        public static bool BadFoodstatus = false;
 
         public static bool gamewasover = false;
         TextLabel GAMEOVER;
-        
+
+
         //placing the game borders, must have them or the game will be unloseble
         public void PlaceBorders(Board board)
         {
@@ -100,12 +104,12 @@ namespace SnakeGamePlatform
             //super food
             Position SuperFoodPosition = new Position(0,0);
             SuperFood = new GameObject(SuperFoodPosition, BodySize, BodySize);
-            SuperFood.SetImage(Properties.Resources.food);
+            SuperFood.SetImage(Properties.Resources.petegmeretz);
 
             //bad food
             Position BadFoodPosition = new Position(0,0);
             BadFood = new GameObject(BadFoodPosition, BodySize, BodySize);
-            BadFood.SetImage(Properties.Resources.food);
+            BadFood.SetImage(Properties.Resources.licod);
         }
         public void GameInit(Board board)
         {
@@ -172,11 +176,12 @@ namespace SnakeGamePlatform
         //Use this function to move game objects and check collisions
         public void GameClock(Board board)
         {
+            timer += timerDifficulty;
             SnakeMovement();
 
             lblScore.SetText($"SCORE:{bodyLength-1}");
-            PlaceTimer(board);
-
+            lbltimer.SetText($"timer:{timer/1000}");
+            
             Position snakeHeadPosition = snakeBody[0].GetPosition();
             if (snakeBody[0].direction == GameObject.Direction.RIGHT)
             {
@@ -201,6 +206,7 @@ namespace SnakeGamePlatform
             GameOver(board);
             SnakeEatenFood(board);
             AddFood(board);
+            AddSuperFood(board);
 
         }
 
@@ -275,6 +281,7 @@ namespace SnakeGamePlatform
                 board.RemoveGameObject(Food);
                 board.RemoveGameObject(SuperFood);
                 board.RemoveGameObject(BadFood);
+                board.SetBackgroundColor(Color.Red);
                 //letting the user to restart the game by pressing "SPACE"
 
                 gamewasover = true;
@@ -308,9 +315,12 @@ namespace SnakeGamePlatform
             // reseting all the helping parameters
             timerDifficulty = 120;
             bodyLength = 1;
-            FoodCount = 0;
-            SuperFoodCount = 0;
-            BadFoodCount = 0;
+            Foodstatus = false;
+            SuperFoodstatus = false;
+            BadFoodstatus = false;
+            MemberOfKnesset = 1;
+            timer = 0;
+            
 
         }
 
@@ -320,7 +330,7 @@ namespace SnakeGamePlatform
         /// <param name="board"></param>
         public void AddFood(Board board)
         {
-            if (FoodCount < 1)
+            if (!Foodstatus)
             {
                 Random foodX = new Random();
                 Random foodY = new Random();
@@ -332,7 +342,7 @@ namespace SnakeGamePlatform
                     Food.SetPosition(new Position(foodX.Next(0, 421), Math.Abs(foodY.Next(0, 800) - 421 - foodX.Next(0, 200))));
                     IsInteractsWithSomething = Food.OnScreen(board) && !Food.IntersectWith(snakeBody[0]) && !Food.IntersectWith(SuperFood) && !Food.IntersectWith(BadFood) && !OBJInteractsWithSnake(board, Food) && !Food.IntersectWith(LeftBorder) && !Food.IntersectWith(RightBorder) && !Food.IntersectWith(BottomBorder) && !Food.IntersectWith(TopBorder);
                 }
-                FoodCount++;
+                Foodstatus = true;
                 board.AddGameObject(Food);
             }
         }
@@ -340,27 +350,32 @@ namespace SnakeGamePlatform
         //generate the "SuperFood" item type on the board
         public void AddSuperFood(Board board)
         {
-            if (SuperFoodCount < 1)
+            if (SuperFoodstatus && (timer/1000)%12 == 0)
+            {
+                SuperFood.SetPosition(new Position(0,0));
+                SuperFoodstatus = false;
+            }
+            else if(!SuperFoodstatus && (timer / 1000) % 12 == 0)
             {
                 Random foodX = new Random();
                 Random foodY = new Random();
 
                 SuperFood.SetPosition(new Position(foodX.Next(20, 421), foodY.Next(20, 381)));
-                bool IsInteractsWithSomething = !SuperFood.IntersectWith(snakeBody[0]) && !SuperFood.IntersectWith(Food) && !SuperFood.IntersectWith(BadFood) && !OBJInteractsWithSnake(board, SuperFood) && !SuperFood.IntersectWith(LeftBorder) && !SuperFood.IntersectWith(RightBorder) && !SuperFood.IntersectWith(BottomBorder) && !SuperFood.IntersectWith(TopBorder);
+                bool IsInteractsWithSomething = Food.OnScreen(board) && !SuperFood.IntersectWith(snakeBody[0]) && !SuperFood.IntersectWith(Food) && !SuperFood.IntersectWith(BadFood) && !OBJInteractsWithSnake(board, SuperFood) && !SuperFood.IntersectWith(LeftBorder) && !SuperFood.IntersectWith(RightBorder) && !SuperFood.IntersectWith(BottomBorder) && !SuperFood.IntersectWith(TopBorder);
                 while (!IsInteractsWithSomething)
                 {
                     SuperFood.SetPosition(new Position(foodX.Next(20, 421), foodY.Next(20, 381)));
-                    IsInteractsWithSomething = !SuperFood.IntersectWith(snakeBody[0]) && !SuperFood.IntersectWith(Food) && !SuperFood.IntersectWith(BadFood) && !OBJInteractsWithSnake(board, SuperFood) && !SuperFood.IntersectWith(LeftBorder) && !SuperFood.IntersectWith(RightBorder) && !SuperFood.IntersectWith(BottomBorder) && !SuperFood.IntersectWith(TopBorder);
+                    IsInteractsWithSomething = Food.OnScreen(board) && !SuperFood.IntersectWith(snakeBody[0]) && !SuperFood.IntersectWith(Food) && !SuperFood.IntersectWith(BadFood) && !OBJInteractsWithSnake(board, SuperFood) && !SuperFood.IntersectWith(LeftBorder) && !SuperFood.IntersectWith(RightBorder) && !SuperFood.IntersectWith(BottomBorder) && !SuperFood.IntersectWith(TopBorder);
                 }
-                SuperFoodCount++;
                 board.AddGameObject(SuperFood);
+                SuperFoodstatus = true;
             }
         }
 
         //generate the "BadFood" item type on the board
         public void AddBadFood(Board board)
         {
-            if (BadFoodCount < 1)
+            if (BadFoodstatus)
             {
                 Random foodX = new Random();
                 Random foodY = new Random();
@@ -372,7 +387,7 @@ namespace SnakeGamePlatform
                     BadFood.SetPosition(new Position(foodX.Next(20, 421), foodY.Next(20, 381)));
                     IsInteractsWithSomething = !BadFood.IntersectWith(snakeBody[0]) && !BadFood.IntersectWith(SuperFood) && !BadFood.IntersectWith(Food) && !OBJInteractsWithSnake(board, BadFood) && !BadFood.IntersectWith(LeftBorder) && !BadFood.IntersectWith(RightBorder) && !BadFood.IntersectWith(BottomBorder) && !BadFood.IntersectWith(TopBorder);
                 }
-                BadFoodCount++;
+                BadFoodstatus = false;
                 board.AddGameObject(BadFood);
             }
         }
@@ -420,7 +435,6 @@ namespace SnakeGamePlatform
             }
             Position newBodyPosition = copy[bodyLength - 2].GetPosition();
             copy[bodyLength - 1] = new GameObject(newBodyPosition, BodySize, BodySize);
-            copy[bodyLength - 1].SetImage(Properties.Resources.cos);
 
             if (snakeBody[bodyLength - 2].direction == GameObject.Direction.RIGHT)
             {
@@ -444,9 +458,32 @@ namespace SnakeGamePlatform
             }
             board.AddGameObject(copy[bodyLength - 1]);
             copy[bodyLength - 1].SetImage(Properties.Resources.cos);
+            switch (MemberOfKnesset)
+            {
+                case 1:
+                    copy[bodyLength - 1].SetImage(Properties.Resources.nitzanhorvits);
+                    MemberOfKnesset++;
+                    break;
+                case 2:
+                    copy[bodyLength - 1].SetImage(Properties.Resources.tamarzanberg);
+                    MemberOfKnesset++;
+                    break;
+                case 3:
+                    copy[bodyLength - 1].SetImage(Properties.Resources.yairgolan);
+                    MemberOfKnesset++;
+                    break;
+                case 4:
+                    copy[bodyLength - 1].SetImage(Properties.Resources.zoabi);
+                    MemberOfKnesset++;
+                    break;
+                case 5:
+                    copy[bodyLength - 1].SetImage(Properties.Resources.fridge);
+                    MemberOfKnesset = 1;
+                    break;
+            }
             snakeBody = copy;
             snakeBody[bodyLength - 1].direction = snakeBody[bodyLength - 2].direction;
-            board.AddGameObject(snakeBody[bodyLength-1]);
+            board.AddGameObject(snakeBody[bodyLength - 1]);
             timerDifficulty -= 2;
             board.StartTimer(timerDifficulty);
 
@@ -496,17 +533,20 @@ namespace SnakeGamePlatform
                 board.PauseBackgroundMusic();
                 board.PlayShortMusic(@"\Images\eatFood.wav");
                 SnakeGrowByOne(board);
-                FoodCount--;
+                Foodstatus = false;
                 board.ResumeBackgroundMusic();
             }
             if (snakeBody[0].IntersectWith(SuperFood))
             {
                 board.PauseBackgroundMusic();
                 board.PlayShortMusic(@"\Images\eatSuperFood.wav");
-                SnakeGrowByNumber(board, 3);
+                SnakeGrowByNumber(board, 2);
                 AddSuperFood(board);
                 board.ResumeBackgroundMusic();
+                SuperFood.SetPosition(new Position(0, 0));
+                SuperFoodstatus = false;
                 
+
             }
             if (snakeBody[0].IntersectWith(BadFood))
             {

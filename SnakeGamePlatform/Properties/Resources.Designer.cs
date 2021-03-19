@@ -102,6 +102,26 @@ namespace SnakeGamePlatform.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fridge {
+            get {
+                object obj = ResourceManager.GetObject("fridge", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap licod {
+            get {
+                object obj = ResourceManager.GetObject("licod", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap merets {
             get {
                 object obj = ResourceManager.GetObject("merets", resourceCulture);
@@ -112,9 +132,49 @@ namespace SnakeGamePlatform.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap nitzanhorvits {
+            get {
+                object obj = ResourceManager.GetObject("nitzanhorvits", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap petegmeretz {
+            get {
+                object obj = ResourceManager.GetObject("petegmeretz", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap rozen_menu {
             get {
                 object obj = ResourceManager.GetObject("rozen_menu", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tamarzanberg {
+            get {
+                object obj = ResourceManager.GetObject("tamarzanberg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap yairgolan {
+            get {
+                object obj = ResourceManager.GetObject("yairgolan", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -165,6 +225,16 @@ namespace SnakeGamePlatform.Properties {
         internal static System.Drawing.Bitmap yona {
             get {
                 object obj = ResourceManager.GetObject("yona", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap zoabi {
+            get {
+                object obj = ResourceManager.GetObject("zoabi", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

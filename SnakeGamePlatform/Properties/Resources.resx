@@ -130,11 +130,29 @@
   <data name="food" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\f.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="fridge" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\fridge.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="licod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\licod.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="merets" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\resources\merets.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="nitzanhorvits" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\nitzanhorvits.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="petegmeretz" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\petegmeretz.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="rozen_menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\rozen_menu.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="tamarzanberg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\tamarzanberg.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="yairgolan" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\yairgolan.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="yodasigma" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\yodasigma.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -150,5 +168,8 @@
   </data>
   <data name="yona" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\images\yona.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="zoabi" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\images\zoabi.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
