@@ -78,16 +78,16 @@ namespace SnakeGamePlatform
         //placing the score for the player to see
         public void PlaceScore(Board board)
         {
-            Position labelPosition = new Position(0, 25);
+            Position labelPosition = new Position(2, 25);
             lblScore = new TextLabel($"SCORE:{(bodyLength-1).ToString()}", labelPosition);
-            lblScore.SetFont("comics sans", 10);
+            lblScore.SetFont("comics sans", 12);
             board.AddLabel(lblScore);
         }
 
         //placing the timer fot the player
         public void PlaceTimer(Board board)
         {
-            Position timerPosition = new Position(180, 550);
+            Position timerPosition = new Position(2, 70);
             lbltimer = new TextLabel("Time:", timerPosition);
             lbltimer.SetFont("comics sans", 12);
             board.AddLabel(lbltimer);
@@ -184,7 +184,7 @@ namespace SnakeGamePlatform
             SnakeMovement();
 
             lblScore.SetText($"SCORE:{bodyLength-1}");
-            lbltimer.SetText($"timer:{timer/1000}");
+            lbltimer.SetText($"Time:{timer/1000}");
             
             Position snakeHeadPosition = snakeBody[0].GetPosition();
             if (snakeBody[0].direction == GameObject.Direction.RIGHT)
@@ -254,7 +254,7 @@ namespace SnakeGamePlatform
         //checks if the player has lost and "uploads" the "GAME OVER" screen
         public void GameOver(Board board)
         {
-            bool isOver = (OBJInteractsWithSnake(board,snakeBody[0])||snakeBody[0].IntersectWith(LeftBorder) || snakeBody[0].IntersectWith(RightBorder) || snakeBody[0].IntersectWith(BottomBorder) || snakeBody[0].IntersectWith(TopBorder));
+            bool isOver = (OBJInteractsWithSnake(board,snakeBody[0])||snakeBody[0].IntersectWith(LeftBorder) || snakeBody[0].IntersectWith(RightBorder) || snakeBody[0].IntersectWith(BottomBorder) || snakeBody[0].IntersectWith(TopBorder) || bodyLength >= 36);
             if (isOver)
             {
                 board.StopBackgroundMusic();
@@ -277,12 +277,16 @@ namespace SnakeGamePlatform
                 board.AddLabel(lblScore);
 
                 Random IndexOfEnding = new Random();
-                int ezer = IndexOfEnding.Next(0, 5);
                 string funnySetence = "";
+                Position FunnySetencePosition = new Position(180, 50);
+                FunnyEnding = new TextLabel(funnySetence, FunnySetencePosition);
+                FunnyEnding.SetFont("comics sans", 40);
+                int ezer = IndexOfEnding.Next(0, 5);
                 switch (ezer)
                 {
                     case 0:
                         funnySetence = "עוד קצת והיינו עוברים את אחוז החסימה";
+                        FunnyEnding.SetFont("comic sans", 30);
                         break;
                     case 1:
                         funnySetence = "שלטון ימין זכה";
@@ -297,9 +301,11 @@ namespace SnakeGamePlatform
                         funnySetence = "מעניין איזה תיק נקבל...";
                         break;
                 }
-                Position FunnySetencePosition = new Position(180, 50);
-                FunnyEnding = new TextLabel(funnySetence, FunnySetencePosition);
-                FunnyEnding.SetFont("comics sans", 40);
+                if (bodyLength >=36)
+                {
+                    funnySetence = "נצחנו ביבי הולך לכלא";
+                }
+                FunnyEnding.SetText(funnySetence);
                 board.AddLabel(FunnyEnding);
 
                 lblPressSpace = new TextLabel("press space to restart",new Position(300,100));
@@ -409,27 +415,6 @@ namespace SnakeGamePlatform
                 SuperFoodstatus = false;
                 SuperFoodTimer = 0;
             }
-
-            //if (SuperFoodstatus && (timer/1000)%12 == 0)
-            //{
-            //    SuperFood.SetPosition(new Position(0,0));
-            //    SuperFoodstatus = false;
-            //}
-            //else if(!SuperFoodstatus && (timer / 1000) % 12 == 0)
-            //{
-            //    Random foodX = new Random();
-            //    Random foodY = new Random();
-
-            //    SuperFood.SetPosition(new Position(foodX.Next(20, 421), foodY.Next(20, 381)));
-            //    bool IsInteractsWithSomething = Food.OnScreen(board) && !SuperFood.IntersectWith(snakeBody[0]) && !SuperFood.IntersectWith(Food) && !SuperFood.IntersectWith(BadFood) && !OBJInteractsWithSnake(board, SuperFood) && !SuperFood.IntersectWith(LeftBorder) && !SuperFood.IntersectWith(RightBorder) && !SuperFood.IntersectWith(BottomBorder) && !SuperFood.IntersectWith(TopBorder);
-            //    while (!IsInteractsWithSomething)
-            //    {
-            //        SuperFood.SetPosition(new Position(foodX.Next(20, 421), foodY.Next(20, 381)));
-            //        IsInteractsWithSomething = Food.OnScreen(board) && !SuperFood.IntersectWith(snakeBody[0]) && !SuperFood.IntersectWith(Food) && !SuperFood.IntersectWith(BadFood) && !OBJInteractsWithSnake(board, SuperFood) && !SuperFood.IntersectWith(LeftBorder) && !SuperFood.IntersectWith(RightBorder) && !SuperFood.IntersectWith(BottomBorder) && !SuperFood.IntersectWith(TopBorder);
-            //    }
-            //    board.AddGameObject(SuperFood);
-            //    SuperFoodstatus = true;
-            //}
         }
 
         //generate the "BadFood" item type on the board
